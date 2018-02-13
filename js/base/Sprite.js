@@ -1,3 +1,4 @@
+import {DataStore} from './DataStore.js'
 /**
  * img 传入image对象
  * srcX 要裁剪的起始X坐标
@@ -11,8 +12,7 @@
  */
 export class Sprite{
   constructor(
-
-      ctx = null,
+    
       img = null,
       srcX = 0,
       srcY = 0,
@@ -24,7 +24,8 @@ export class Sprite{
 
     ){
 
-      this.ctx = ctx,
+      this.dataStore = DataStore.getInstance();
+      this.ctx = this.dataStore.ctx,
       this.img = img,
       this.srcX = srcX,
       this.srcY = srcY,
@@ -36,18 +37,30 @@ export class Sprite{
       this.height = height
 
   } 
-
-  draw(){
+  static getImage(key){
+    return DataStore.getInstance().res.get(key);
+  }
+  draw(
+    img = this.img,
+    srcX = this.srcX,
+    srcY = this.srcY,
+    srcW = this.srcW,
+    srcH = this.srcH,
+    x = this.x,
+    y = this.y,
+    width = this.width,
+    height = this.height
+  ){
     this.ctx.drawImage(
-      this.img,
-      this.srcX,
-      this.srcY,
-      this.srcW,
-      this.srcH,
-      this.x,
-      this.y,
-      this.width,
-      this.height
+      img,
+      srcX,
+      srcY,
+      srcW,
+      srcH,
+      x,
+      y,
+      width,
+      height
     )
   }
 }

@@ -1,32 +1,28 @@
 import { ResourcesLoader } from './js/base/ResourcesLoader.js'
+import { BackGround } from './js/runtime/BackGround.js'
+import { DataStore } from './js/base/DataStore.js'
+import { Director } from './js/Director.js'
+
 
 export class Main {
-  constructor(){
+  constructor() {
     this.canvas = wx.createCanvas()
     this.ctx = this.canvas.getContext('2d')
+    this.dataStore = DataStore.getInstance()
     const loader = ResourcesLoader.create()
     loader.onLoaded(map => this.onResourcesFirstLoaded(map))
-
-    let image = wx.createImage();
-    image.src = './res/background.png';
     
-    image.onload = ()=>{
-      this.ctx.drawImage(
-        image,
-        0,
-        0,
-        image.width,
-        image.height,
-        0,
-        0,
-        image.width,
-        image.height
-      )
-    }
   }
 
-  onResourcesFirstLoaded(map){
-    console.log(map)
+  onResourcesFirstLoaded(map) {
+    this.dataStore.ctx = this.ctx;
+    this.dataStore.res = map;
+    this.init()
   }
-  
+
+  init(){
+    this.dataStore.put('background', BackGround)
+    Director.getInstance().run()
+  }
+
 }
