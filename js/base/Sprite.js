@@ -12,7 +12,7 @@ import {DataStore} from './DataStore.js'
  */
 export class Sprite{
   constructor(
-    
+      
       img = null,
       srcX = 0,
       srcY = 0,
@@ -23,7 +23,6 @@ export class Sprite{
       height = 0
 
     ){
-
       this.dataStore = DataStore.getInstance();
       this.ctx = this.dataStore.ctx,
       this.img = img,
